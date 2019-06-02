@@ -111,7 +111,7 @@ class stockDownload(Path):
 
 class Run():
     def __init__(self, instrument, start, end, api, granular, timer):
-        self.timer = time
+        self.timer = timer
         self.instrument = instrument
         self.start = start
         self.end = end
@@ -120,14 +120,14 @@ class Run():
         
         try:
             if self.timer is None:
-                raise('set timer')
+                raise ValueError('set timer')
             else:
                 thread = threading.Thread(target = self.runMain)
                 thread.daemon = True
                 thread.start()
                 thread.join()
         except Exception:
-            raise ValueError('timer missen')
+            raise ValueError('Thread unable to start')
             
     def runMain(self):
         while True:
