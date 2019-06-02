@@ -68,19 +68,19 @@ class stockDownload(Path):
         def covert_json(reqst, frame):
             for candle in reqst.get('candles'):
                 ctime = candle.get('time')[0:19]
-                 
-            try:
-                rec = '{time},{complete},{o},{h},{l},{c},{v}'.format(time = ctime,
-                       complete = candle['complete'],
-                       o = candle['mid']['o'],
-                       h = candle['mid']['h'],
-                       l = candle['mid']['l'],
-                       c = candle['mid']['c'],
-                       v = candle['volume'])
-            except Exception as e:
-                raise(e)
-            else:
-                frame.write(rec+'\n')
+                try:
+                    rec = '{time},{complete},{o},{h},{l},{c},{v}'.format(time = ctime,
+                           complete = candle['complete'],
+                           o = candle['mid']['o'],
+                           h = candle['mid']['h'],
+                           l = candle['mid']['l'],
+                           c = candle['mid']['c'],
+                           v = candle['volume'])
+                except Exception as e:
+                    raise(e)
+                else:
+                    frame.write(rec+'\n')
+                
                 
         #try except to both create folder and enter ticker
         try:
