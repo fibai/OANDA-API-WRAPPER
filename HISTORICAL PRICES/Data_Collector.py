@@ -117,19 +117,28 @@ class Run():
         self.end = end
         self.api = api
         self.granular = granular
-        
         try:
             if self.timer is None:
                 raise ValueError('set timer')
             else:
-                thread = threading.Thread(target = self.runMain)
-                thread.daemon = True
-                thread.start()
-                thread.join()
+                thread = []
+                for granule in self.granular:
+                    for slp in self.timer:
+                        thread.append(multiprocessing.Process(target = self.runMain, args = (granule, slp)))
+                for trd in thread:
+                    trd.daemon = True
+                    trd.start()
+                for st_trd in thread:
+                    st_trd.join()
         except Exception:
             raise ValueError('Thread unable to start')
             
-    def runMain(self):
+    def Downloader(self, gran):
+        for instr in self.instrument:
+            stockDownload(instr, self.start, self.end, self.api, gran).downloadStockData()
+            
+    def runMain(self, gran, sleeper):
+        self.sleeper = sleeper
         while True:
             if not self.instrument:
                 break
@@ -139,19 +148,19 @@ class Run():
                 break
             elif not self.api:
                 raise ValueError('client api not found')
-            elif not self.granular:
+            elif not gran:
                 break
             else:
-                for ij in self.instrument:
-                    stockDownload(ij, self.start, self.end, self.api, self.granular).downloadStockData()
-            time.sleep(self.timer)
+                self.Downloader(gran)
+            print('program running in background')
+            time.sleep(self.sleeper)
 
 
 if __name__ == '__main__':
   #import required libraries
   import os
   import datetime
-  import threading
+  import multiprocessing
   import time
   path = '/home/kenneth/Documents/GIT_PROJECTS/AI-Signal-Generator'
   os.chdir(path)
@@ -169,7 +178,7 @@ if __name__ == '__main__':
                 'NZD_USD']
   
   #'Note however that this may be time consuming as the dataset is huge
-  CandlestickGranularity_ = {
+  CandlestickGranularity_ = [{
           "M15": "15 minute candlesticks, hour alignment",
           "M30": "30 minute candlesticks, hour alignment",
           "H1": "1 hour candlesticks, hour alignment",
@@ -179,11 +188,11 @@ if __name__ == '__main__':
           "H6": "6 hour candlesticks, day alignment",
           "H8": "8 hour candlesticks, day alignment",
           "H12": "12 hour candlesticks, day alignment",
-      }
-  CandlestickGranularity_WD = {
+      },
+          {
           "D": "1 day candlesticks, day alignment",
           "W": "1 week candlesticks, aligned to start of week",
-          }
+          }]
   #download stock data
   _from_gr = '2019-03-01T00:00:00Z'
   _end_gr = datetime.datetime.utcnow().isoformat('T')+'Z'
@@ -191,8 +200,7 @@ if __name__ == '__main__':
   _from = '2017-01-01T00:00:00Z'
   _end = datetime.datetime.utcnow().isoformat('T')+'Z'
   _end = str(_end[:-8] + 'Z')
-  Run(instrument, _from, _end, client, CandlestickGranularity_WD, 86400)
-  Run(instrument, _from_gr, _end_gr, client, CandlestickGranularity_, 1800)
+  Run(instrument, _from_gr, _end_gr, client, CandlestickGranularity_, timer = [86400, 1800])
 
 
 
