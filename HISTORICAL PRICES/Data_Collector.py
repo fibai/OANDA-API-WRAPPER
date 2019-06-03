@@ -100,7 +100,7 @@ class stockDownload(Path):
                           self.client.request(ii)
                           covert_json(ii.response, OUTPUT)
                     except:
-                        print('{} not available using this API'.format(instrument))
+                        print('{} not available using this API\n Please check your internet connection'.format(instrument))
                     print('********************Done downloading******************\n{}_{}'.format(self.instrument, timeframe))
         except Exception as e:
             raise(e)
@@ -110,34 +110,79 @@ class stockDownload(Path):
             print('*'*40)
 
 class Run():
-    def __init__(self, instrument, start, end, api, granular, timer):
+    def __init__(self, instrument, timeframe, api, granular, timer, start_fm = None, end_hr = None):
         self.timer = timer
         self.instrument = instrument
-        self.start = start
-        self.end = end
+        self.timeframe = timeframe
+        self.start_fm = start_fm
+        self.end_hr = end_hr
         self.api = api
         self.granular = granular
         try:
             if self.timer is None:
                 raise ValueError('set timer')
             else:
-                thread = []
-                for granule in self.granular:
-                    for slp in self.timer:
-                        thread.append(multiprocessing.Process(target = self.runMain, args = (granule, slp)))
-                for trd in thread:
-                    trd.daemon = True
-                    trd.start()
-                for st_trd in thread:
-                    st_trd.join()
+                if len(self.granular) > 1:
+                    thread = []
+                    for iterr, granule in enumerate(self.granular):
+                        for iterr_time, slp in enumerate(self.timer):
+                            if iterr == 0:
+                                start = self.timeframe[0][0]
+                                end = self.timeframe[0][1]
+                                thread.append(multiprocessing.Process(target = self.runMain, args = (self.granular[iterr], self.timer[iterr], start, end)))
+                            if iterr == 1:
+                                start = self.timeframe[1][0]
+                                end = self.timeframe[1][1]
+                                thread.append(multiprocessing.Process(target = self.runMain, args = (self.granular[iterr], self.timer[iterr], start, end)))
+                    for trd in thread:
+                        trd.daemon = True
+                        trd.start()
+                    for st_trd in thread:
+                        st_trd.join()
+                else:
+                    thread = []
+                    for iterr, granule in self.granular:
+                        for iterr_time, slp in self.timer:
+                                thread.append(multiprocessing.Process(target = self.subMain, args = (granule, slp)))
+                    for trd in thread:
+                        trd.daemon = True
+                        trd.start()
+                    for st_trd in thread:
+                        st_trd.join()
         except Exception:
             raise ValueError('Thread unable to start')
             
-    def Downloader(self, gran):
+    def Downloader(self, gran, start, end):
+        self.start = start
+        self.end = end
         for instr in self.instrument:
             stockDownload(instr, self.start, self.end, self.api, gran).downloadStockData()
             
-    def runMain(self, gran, sleeper):
+    def subDownloader(self, gran):
+        for instr in self.instrument:
+            stockDownload(instr, self.start_fm, self.end_hr, self.api, gran).downloadStockData()
+            
+    def runMain(self, gran, sleeper, start, end):
+        self.sleeper = sleeper
+        self.start = start
+        self.end = end
+        while True:
+            if not self.instrument:
+                break
+            elif not self.start:
+                break
+            elif not self.end:
+                break
+            elif not self.api:
+                raise ValueError('client api not found')
+            elif not gran:
+                break
+            else:
+                self.Downloader(gran, self.start, self.end)
+            print('program running in background')
+            time.sleep(self.sleeper)
+        
+    def subMain(self, gran, sleeper):
         self.sleeper = sleeper
         while True:
             if not self.instrument:
@@ -151,10 +196,11 @@ class Run():
             elif not gran:
                 break
             else:
-                self.Downloader(gran)
+                self.subDownloader(gran)
             print('program running in background')
             time.sleep(self.sleeper)
 
+#%%
 
 if __name__ == '__main__':
   #import required libraries
@@ -177,7 +223,8 @@ if __name__ == '__main__':
                 'BTC_USD', 'EUR_CAD', 'EUR_GBP', 'EUR_NZD',
                 'NZD_USD']
   
-  #'Note however that this may be time consuming as the dataset is huge
+  #Note however that this may be time consuming as the dataset is huge
+  #so it depends on LAN/Wireless speed
   CandlestickGranularity_ = [{
           "M15": "15 minute candlesticks, hour alignment",
           "M30": "30 minute candlesticks, hour alignment",
@@ -200,7 +247,8 @@ if __name__ == '__main__':
   _from = '2017-01-01T00:00:00Z'
   _end = datetime.datetime.utcnow().isoformat('T')+'Z'
   _end = str(_end[:-8] + 'Z')
-  Run(instrument, _from_gr, _end_gr, client, CandlestickGranularity_, timer = [86400, 1800])
+  time_frame = [[_from_gr, _end_gr], [_from, _end]]
+  Run(instrument = instrument, timeframe = time_frame, api = client, granular = CandlestickGranularity_, timer = [86400, 1800])
 
 
 
