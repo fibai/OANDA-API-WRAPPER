@@ -33,7 +33,7 @@ the second process updates every 30mins (30*60) for timeframes
 
 ```python
 oandapyV20
-------------------
+
 pip install oandapyV20
 ```
 
