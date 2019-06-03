@@ -4,7 +4,7 @@
 The Data Collector class is an automated multi-threaded class designed
 to donwload stock prices at defined time intervals. 
 
-Here we set it to:
+Here we set time interval to:
 timer = [1800, 86400]
 
 The first(timer[0]) updates every 30mins (30*60) for timeframes
