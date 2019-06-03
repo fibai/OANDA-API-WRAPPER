@@ -1,7 +1,8 @@
 ## About
 
 ```python
-The Data Collector class is an automated multi-threaded class design to donwload stock prices at defined time intervals. 
+The Data Collector class is an automated multi-threaded class designed
+to donwload stock prices at defined time intervals. 
 
 Here we set it to:
 timer = [86400, 1800]
