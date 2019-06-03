@@ -1,3 +1,33 @@
+## About
+
+```python
+The Data Collector class is an automated multi-threaded class design to donwload stock prices at defined time intervals. 
+
+Here we set it to:
+timer = [86400, 1800]
+
+The first updates every 24hours (24*60*60) for timeframes
+
+{
+          "M15": "15 minute candlesticks, hour alignment",
+          "M30": "30 minute candlesticks, hour alignment",
+          "H1": "1 hour candlesticks, hour alignment",
+          "H2": "1 hour candlesticks, day alignment",
+          "H3": "3 hour candlesticks, day alignment",
+          "H4": "4 hour candlesticks, day alignment",
+          "H6": "6 hour candlesticks, day alignment",
+          "H8": "8 hour candlesticks, day alignment",
+          "H12": "12 hour candlesticks, day alignment",
+      }
+      
+the second process updates every 30mins (30*60) for timeframes
+
+{
+          "D": "1 day candlesticks, day alignment",
+          "W": "1 week candlesticks, aligned to start of week",
+          }
+          
+```
 ## Requirements
 
 ```python
