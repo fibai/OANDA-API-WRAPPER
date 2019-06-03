@@ -5,9 +5,9 @@ The Data Collector class is an automated multi-threaded class designed
 to donwload stock prices at defined time intervals. 
 
 Here we set it to:
-timer = [86400, 1800]
+timer = [1800, 86400]
 
-The first updates every 24hours (24*60*60) for timeframes
+The first(timer[0]) updates every 30mins (30*60) for timeframes
 
 {
           "M15": "15 minute candlesticks, hour alignment",
@@ -21,7 +21,7 @@ The first updates every 24hours (24*60*60) for timeframes
           "H12": "12 hour candlesticks, day alignment",
       }
       
-the second process updates every 30mins (30*60) for timeframes
+the second(timer[1]) process updates every 24hours (24*60*60) for timeframes
 
 {
           "D": "1 day candlesticks, day alignment",
