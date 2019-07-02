@@ -41,6 +41,10 @@ pip install oandapyV20
 
 Ensure you have your token from Oanda stored in the token folder
 
+```bash
+:~$ git clone https://github.com/fibai/OANDA-API-WRAPPER
+```
+
 ```python
 with open(path +'/DOCS/token.txt') as tk:
     token = tk.readline().strip()
