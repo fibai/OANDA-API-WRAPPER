@@ -3,7 +3,10 @@
 ```bash
 :~$ git clone https://github.com/fibai/OANDA-API-WRAPPER
 ```
-
+```
+Edit line code line 16 accordingly. Ensure all paths are correct. Also note you 
+should have an account ID and token from Oanda to use this script.
+```
 ```python
 :~$ python streamQuote.py
 
