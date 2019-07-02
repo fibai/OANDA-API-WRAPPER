@@ -1,10 +1,10 @@
 ## HOW TO USE
 
-'''bash
+```bash
 :~$ git clone https://github.com/fibai/OANDA-API-WRAPPER
-'''
+```
 
-'''python
+```python
 :~$ python streamQuote.py
 
 [{'tickers': 'EUR_USD', 'bids': '1.12991', 'asks': '1.13003', 'direction': 'v'}]
@@ -44,4 +44,4 @@
 [{'tickers': 'EUR_USD', 'bids': '1.12991', 'asks': '1.13003', 'direction': 'v'}, {'tickers': 'EUR_GBP', 'bids': '0.89359', 'asks': '0.89374', 'direction': 'v'}, {'tickers': 'EUR_CAD', 'bids': '1.48216', 'asks': '1.48235', 'direction': 'v'}, {'tickers': 'EUR_NZD', 'bids': '1.69369', 'asks': '1.69398', 'direction': 'v'}, {'tickers': 'USD_JPY', 'bids': '108.149', 'asks': '108.161', 'direction': '^'}, {'tickers': 'GBP_USD', 'bids': '1.26437', 'asks': '1.26454', 'direction': '^'}, {'tickers': 'AUD_USD', 'bids': '0.69989', 'asks': '0.70002', 'direction': 'v'}, {'tickers': 'AUD_CAD', 'bids': '0.91810', 'asks': '0.91828', 'direction': 'v'}, {'tickers': 'NZD_USD', 'bids': '0.66703', 'asks': '0.66719', 'direction': 'v'}, {'tickers': 'XAU_USD', 'bids': '1390.930', 'asks': '1391.193', 'direction': 'v'}, {'tickers': 'BTC_USD', 'bids': '9896.8', 'asks': '9932.8', 'direction': '^'}]
 [{'tickers': 'EUR_USD', 'bids': '1.12991', 'asks': '1.13003', 'direction': 'v'}, {'tickers': 'EUR_GBP', 'bids': '0.89359', 'asks': '0.89374', 'direction': 'v'}, {'tickers': 'EUR_CAD', 'bids': '1.48216', 'asks': '1.48235', 'direction': 'v'}, {'tickers': 'EUR_NZD', 'bids': '1.69368', 'asks': '1.69398', 'direction': 'v'}, {'tickers': 'USD_JPY', 'bids': '108.149', 'asks': '108.161', 'direction': '^'}, {'tickers': 'GBP_USD', 'bids': '1.26437', 'asks': '1.26454', 'direction': '^'}, {'tickers': 'AUD_USD', 'bids': '0.69989', 'asks': '0.70002', 'direction': 'v'}, {'tickers': 'AUD_CAD', 'bids': '0.91810', 'asks': '0.91828', 'direction': 'v'}, {'tickers': 'NZD_USD', 'bids': '0.66703', 'asks': '0.66719', 'direction': 'v'}, {'tickers': 'XAU_USD', 'bids': '1390.930', 'asks': '1391.193', 'direction': 'v'}, {'tickers': 'BTC_USD', 'bids': '9896.8', 'asks': '9932.8', 'direction': '^'}]
 [{'tickers': 'EUR_USD', 'bids': '1.12991', 'asks': '1.13003', 'direction': 'v'}, {'tickers': 'EUR_GBP', 'bids': '0.89359', 'asks': '0.89374', 'direction': 'v'}, {'tickers': 'EUR_CAD', 'bids': '1.48216', 'asks': '1.48235', 'direction': 'v'}, {'tickers': 'EUR_NZD', 'bids': '1.69368', 'asks': '1.69398', 'direction': 'v'}, {'tickers': 'USD_JPY', 'bids': '108.149', 'asks': '108.161', 'direction': '^'}, {'tickers': 'GBP_USD', 'bids': '1.26437', 'asks': '1.26454', 'direction': '^'}, {'tickers': 'AUD_USD', 'bids': '0.69989', 'asks': '0.70002', 'direction': 'v'}, {'tickers': 'AUD_CAD', 'bids': '0.91806', 'asks': '0.91827', 'direction': 'v'}, {'tickers': 'NZD_USD', 'bids': '0.66703', 'asks': '0.66719', 'direction': 'v'}, {'tickers': 'XAU_USD', 'bids': '1390.930', 'asks': '1391.193', 'direction': 'v'}, {'tickers': 'BTC_USD', 'bids': '9896.8', 'asks': '9932.8', 'direction': '^'}]
-'''
+```
