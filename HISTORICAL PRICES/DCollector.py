@@ -76,13 +76,17 @@ class stockDownload:
             for candle in reqst.get('candles'):
                 ctime = candle.get('time')[0:19]
                 try:
-                    rec = '{time},{complete},{o},{h},{l},{c},{v}'.format(time = ctime,
-                           complete = candle['complete'],
-                           o = candle['mid']['o'],
-                           h = candle['mid']['h'],
-                           l = candle['mid']['l'],
-                           c = candle['mid']['c'],
-                           v = candle['volume'])
+                    #--Only download closed candle
+                    if not candle['complete']:
+                        pass
+                    else:
+                        rec = '{time},{complete},{o},{h},{l},{c},{v}'.format(time = ctime,
+                               complete = candle['complete'],
+                               o = candle['mid']['o'],
+                               h = candle['mid']['h'],
+                               l = candle['mid']['l'],
+                               c = candle['mid']['c'],
+                               v = candle['volume'])
                 except Exception as e:
                     raise(e)
                 else:
@@ -99,7 +103,6 @@ class stockDownload:
                 params = {'from': self.start,
                           'to': self.end,
                           'granularity': self.timeframe,
-                          'counts': 2500
                           }
                 try:
                   for ii in InstrumentsCandlesFactory(instrument = self.instrument, params = params):
@@ -142,7 +145,3 @@ class Runcollector:
         return self.loadData()
           
         
-
-
-
-
