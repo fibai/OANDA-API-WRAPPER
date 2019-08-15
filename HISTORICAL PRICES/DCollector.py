@@ -89,7 +89,7 @@ class stockDownload:
                                v = candle['volume'])
                 except Exception as e:
                     raise(e)
-                else:
+                finally:
                     frame.write(rec+'\n')
                 
                 
@@ -99,7 +99,7 @@ class stockDownload:
             if not os.path.exists(self.path['mainPath'] + f'/DATASETS/{self.instrument}'):
                 os.makedirs(self.path['mainPath'] + f'/DATASETS/{self.instrument}')
             #import the required timeframe
-            with open(self.path['mainPath'] + '/DATASETS/{}/{}_{}.csv'.format(self.instrument, self.instrument, self.timeframe), 'w') as OUTPUT:
+            with open(self.path['mainPath'] + '/DATASETS/{}/{}_{}.csv'.format(self.instrument, self.instrument, self.timeframe), 'w+') as OUTPUT:
                 params = {'from': self.start,
                           'to': self.end,
                           'granularity': self.timeframe,
@@ -129,10 +129,10 @@ class Runcollector:
         self.runnewMain()
 
     def loadData(self):
-        import multiprocessing
+        from threading import Thread
         threads = []
         for instr in self.path['instruments'].split(','):
-            threads.append(multiprocessing.Process(target = stockDownload, args = (self.path, instr, self.start,
+            threads.append(Thread(target = stockDownload, args = (self.path, instr, self.start,
                                                                                    self.end, self.client, self.timeframe)))
         for trd in threads:
             trd.daemon = True
